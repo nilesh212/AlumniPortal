@@ -1,0 +1,19 @@
+
+{%extends 'app/base.html'%}
+{%block body_block%}
+     {%if registered%}
+        <h1>Thank you for registration</h1>
+    {%else%}
+    <form method="post">
+        {%csrf_token%}
+        <p>Name: {{user_form.first_name}}</p>
+        <p>Admin code: {{user_form.last_name}}</p>
+        <p>Username: {{user_form.username}}</p>
+        <p>Password: {{user_form.password}}</p>
+        <p>Email Id: {{user_form.email}}</p>
+
+         {{signup_form.as_p}}
+         <input type="submit" class="btn btn-primary" name="" value="Register">
+    </form>
+    {%endif%}
+{%endblock%}
