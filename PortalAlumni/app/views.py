@@ -32,7 +32,7 @@ def signup(request):
             sign_up.user=user
             sign_up.save()
             registered=True
-            return HttpResponseRedirect(reverse('login'))
+            return HttpResponseRedirect(reverse('app:login'))
         else:
             print(user_form.errors,signup_form.errors)
     else:
@@ -47,33 +47,34 @@ def signup(request):
 
 
 
-# def user_login(request):
-#     if request.method == 'POST':
-#         username=request.POST.get('username')
-#         password=request.POST.get('password')
-#
-#         user = authenticate(username=username,password=password)
-#
-#         if user:
-#
-#             if user.is_active:
-#                 login(request,user)
-#                 return HttpResponseRedirect('/')
-#             else:
-#                 return HttpResponse('Your Account is Inactive. Plz create a different account')
-#
-#         else:
-#             return HttpResponse("invalid login details:  username: " + username + " password: " + password)
-#
-#     else:
-#         return render(request, 'registration/login.html', {})
+def user_login(request):
+     if request.method == 'POST':
+         username=request.POST.get('username')
+         password=request.POST.get('password')
+
+         user = authenticate(username=username,password=password)
+
+         if user:
+
+             if user.is_active:
+                 login(request,user)
+                 return HttpResponseRedirect('/')
+             else:
+                 return HttpResponse('Your Account is Inactive. Plz create a different account')
+
+         else:
+             return HttpResponse("invalid login details:  username: " + username + " password: " + password)
+
+     else:
+         user_form = UserForm()
+         return render(request, 'registration/login.html', {'user_form':user_form})
 
 
 
 @login_required
 def user_logout(request):
      logout(request)
-     return HttpResponseRedirect('/accounts/login')
+     return HttpResponseRedirect('/login')
 
 
 @login_required
@@ -140,11 +141,11 @@ def event_form(request,pk):
 
 
     return render(request,'app/user_event_form.html',{'form':form,
-                                                'user':user,})
+                                                        'user':user,})
 
 @login_required
 def event_detail(request,pk):
     user=get_object_or_404(User,pk=pk)
     event_data=user.events.all()
     return render(request,'app/user_event_detail.html',{'user':user,
-                                                  'event_data':event_data,})
+                                                        'event_data':event_data,})

@@ -1,18 +1,27 @@
 
 {%extends 'app/base.html'%}
-{%block body_block%}
+{%block signup%}
      {%if registered%}
         <h1>Thank you for registration</h1>
     {%else%}
+    <h2>Please SignUp</h2>
+    <br><br><br>
     <form method="post">
         {%csrf_token%}
-        <p>Name: {{user_form.first_name}}</p>
-        <p>Admin code: {{user_form.last_name}}</p>
-        <p>Username: {{user_form.username}}</p>
-        <p>Password: {{user_form.password}}</p>
-        <p>Email Id: {{user_form.email}}</p>
-
-         {{signup_form.as_p}}
+            {%if user_form.errors%}
+                <div id="division_id">
+                    <h3 class="error_h3">Errors:</h3>
+                    <p>{{user_form.errors}}</p>
+                    <p>{{signup_form.errors}}</p>
+                </div>
+            {%endif%}
+        <p>{{user_form.first_name}}</p>
+        <p>{{user_form.last_name}}</p>
+        <p> {{user_form.username}}</p>
+        <p> {{user_form.password}}</p>
+        <p> {{user_form.email}}</p>
+        <p>{{signup_form.roll_number}}</p>
+        <p>{{signup_form.graduation_year}}</p>
          <input type="submit" class="btn btn-primary" name="" value="Register">
     </form>
     {%endif%}

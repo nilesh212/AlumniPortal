@@ -20,34 +20,48 @@
                             <li><a class="nav-link" href="{%url 'app:event_form' pk=user.pk%}">Add Event</a></li>
                             <li><a class="nav-link" href="{%url 'app:event_detail' pk=user.pk%}">Events</a></li>
                         {%endif%}
-                    {%else%}
-                       <li> <a class="nav-link" href="{%url 'app:signup'%}">SignUp</a></li>
-                       <li> <a class="nav-link" href="{%url 'login'%}">LogIn</a></li>
                     {%endif%}
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         {%if user.is_authenticated%}
                             <li><a class="nav-link active" href="{%url 'app:logout'%}">LogOut</a></li>
                             <li><a class="nav nav-link navbar-right" style="color:grey">Welcome: <b style="color:green"> {{user.first_name}}</b></a></li>
+                        {%else%}
+                           <li> <a class="nav-link" href="{%url 'app:signup'%}">SignUp</a></li>
+                           <li> <a class="nav-link" href="{%url 'app:login'%}">LogIn</a></li>
                         {%endif%}
                     </ul>
             </div>
         </nav>
 
-    {%block body_block%}
-        <div class="container">
+
+        <div class="container margin_padding">
            <div class="row">
                 <div class="col-md-6">
                     <div>
-                        {%for user_post in user_all %}
-                            {%for post_all in user_post.posts.all %}
-                                <p>Name: {{user_post.first_name}}</p>
-                                <p>Title: {{post_all.title}}</p>
-                                <p>Text: {{post_all.info}}</p>
-                                <p>Published Date: {{post_all.published_date}}</p>
-                                <hr>
+                        {%block body_block%}
+                        {%for user_event in user_all %}
+                            {%for event_all in user_event.events.all %}
+                                <div class="event_data">
+                                    <img src="{{event_all.photo.url}}" width="610" style="border-radius:3px">
+                                    <h1>{{event_all.title}}</h1>
+                                    <p>{{event_all.text}}</p>
+                                    <p>Name: {{user_event.first_name}}</p>
+                                    <p>Published Date: {{event_all.published_date}}</p>
+                                </div>
                             {%endfor%}
                         {%endfor%}
+                            {%for user_post in user_all %}
+                                {%for post_all in user_post.posts.all %}
+                                    <div class="event_data">
+                                        <p>Name: {{user_post.first_name}}</p>
+                                        <p>Title: {{post_all.title}}</p>
+                                        <p>Text: {{post_all.info}}</p>
+                                        <p>Published Date: {{post_all.published_date}}</p>
+                                    </div>
+                                {%endfor%}
+                            {%endfor%}
+                        {%endblock%}
                     </div>
                 </div>
                <div class="col-md-6">
@@ -64,6 +78,13 @@
                 </div>
            </div>
         </div>
-    {%endblock%}
+        <div class="container">
+            <div class="row justify-content-md-center">
+                {%block signup%}
+
+                {%endblock%}
+            </div>
+        </div>
+
 </body>
 </html>

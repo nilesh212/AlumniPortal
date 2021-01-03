@@ -4,7 +4,8 @@
     <h1>POST FORM of User <B><i>{{user.username}}</i></B></h1><hr>
     <form method="post">
          {%csrf_token%}
-          {{post_filled_form.as_p}}
-         <input type="submit" name="" value="submit">
+          <p>{{post_filled_form.title}}</p>
+        <p>{{post_filled_form.info}}</p>
+         <input type="submit" class="btn btn-primary" name="" value="submit">
      </form>
 {%endblock%}

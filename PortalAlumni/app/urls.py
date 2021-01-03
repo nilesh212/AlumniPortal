@@ -12,6 +12,7 @@ urlpatterns=[
     url(r'^logout/$',views.user_logout,name='logout'),
     url(r'^(?P<pk>\d+)/event/forms/$',views.event_form,name='event_form'),
     url(r'^(?P<pk>\d+)/event/detail/$',views.event_detail,name='event_detail'),
+    url(r'^login/',views.user_login,name='login')
 
 
 ]
