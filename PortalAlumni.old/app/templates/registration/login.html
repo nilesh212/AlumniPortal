@@ -1,0 +1,19 @@
+
+{%extends 'app/base.html'%}
+{%block body_block%}
+    <h2>Please LogIn:</h2>
+
+    {%if forms.errors%}
+        <p>Your username or password is incorrect! please try again.</p>
+
+    {%endif%}
+    <form action="{%url 'app:login'%}" method="POST" >
+        {%csrf_token%}
+        <p> {{user_form.username}}</p>
+        <p>{{user_form.password}}</p>
+        <input type="submit" class="btn btn-primary" value="Login">
+        <input type="hidden" name="next" value="{{next}}">
+
+    </form>
+
+{%endblock%}

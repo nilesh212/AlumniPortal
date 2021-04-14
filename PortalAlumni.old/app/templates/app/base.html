@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{%static 'css/base.css'%}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+</head>
+<body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                    <ul class="nav navbar-nav">
+                    <li><a class="navbar-brand" href="{%url 'app:base'%}"><img src="{%static 'images/logo.jpg'%}" width="200"></a></li>
+                    {%if user.is_authenticated%}
+                       <li> <a class="nav-link" href="{%url 'app:post_new' pk=user.pk %}">Q&A</a></li>
+                        <li><a class="nav-link" href="{%url 'app:post_detail' pk=user.pk%}">Post List</a></li>
+                        {%if user.last_name == 'AANP'%}
+                            <li><a class="nav-link" href="{%url 'app:event_form' pk=user.pk%}">Add Event</a></li>
+                            <li><a class="nav-link" href="{%url 'app:event_detail' pk=user.pk%}">Events</a></li>
+                        {%endif%}
+                    {%endif%}
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        {%if user.is_authenticated%}
+                            <li><a class="nav-link active" href="{%url 'app:logout'%}">LogOut</a></li>
+                            <li><a class="nav nav-link navbar-right" style="color:grey">Welcome: <b style="color:green"> {{user.first_name}}</b></a></li>
+                        {%else%}
+                           <li> <a class="nav-link" href="{%url 'app:signup'%}">SignUp</a></li>
+                           <li> <a class="nav-link" href="{%url 'app:login'%}">LogIn</a></li>
+                        {%endif%}
+                    </ul>
+            </div>
+        </nav>
+
+
+        <div class="container margin_padding">
+           <div class="row">
+                <div class="col-md-6">
+                    <div>
+                        {%block body_block%}
+                        {%for user_event in user_all %}
+                            {%for event_all in user_event.events.all %}
+                                <div class="event_data">
+                                    <img src="{{event_all.photo.url}}" width="610" style="border-radius:3px">
+                                    <h1>{{event_all.title}}</h1>
+                                    <p>{{event_all.text}}</p>
+                                    <p>Name: {{user_event.first_name}}</p>
+                                    <p>Published Date: {{event_all.published_date}}</p>
+                                </div>
+                            {%endfor%}
+                        {%endfor%}
+                            {%for user_post in user_all %}
+                                {%for post_all in user_post.posts.all %}
+                                    <div class="event_data">
+                                        <p>Name: {{user_post.first_name}}</p>
+                                        <p>Title: {{post_all.title}}</p>
+                                        <p>Text: {{post_all.info}}</p>
+                                        <p>Published Date: {{post_all.published_date}}</p>
+                                    </div>
+                                {%endfor%}
+                            {%endfor%}
+                        {%endblock%}
+                    </div>
+                </div>
+               <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+
+                        </div>
+                        <div class="col-md-6 bgrow">
+                            <div >
+                                <h1>Hi! Guys</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-md-center">
+                {%block signup%}
+
+                {%endblock%}
+            </div>
+        </div>
+
+</body>
+</html>

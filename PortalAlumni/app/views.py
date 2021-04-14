@@ -1,13 +1,14 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from django.http import HttpResponseRedirect,HttpResponse
-from app.forms import UserForm,SignUpForm,PostForm,EventForm
-from app.models import PostModel
+from app.forms import UserForm,SignUpForm,PostForm,EventForm,EventCommentForm
+from app.models import PostModel,EventModel
 from django.contrib.auth import authenticate,logout,login
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.generic import (TemplateView,ListView,DetailView,CreateView,UpdateView,DeleteView)
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.db.models import F
 # Create your views here.
 
 
@@ -149,3 +150,32 @@ def event_detail(request,pk):
     event_data=user.events.all()
     return render(request,'app/user_event_detail.html',{'user':user,
                                                         'event_data':event_data,})
+
+@login_required
+def eventcommentform(request,pk):
+    first_name=request.user.first_name
+    event=get_object_or_404(EventModel,pk=pk)
+    if request.method=='POST':
+        form=EventCommentForm(request.POST)
+        if form.is_valid():
+            event.number_of_comments+=1
+            event.save()
+            comment_form=form.save(commit=False)
+            comment_form.event=event
+            comment_form.name=first_name
+            comment_form.save()
+            return HttpResponseRedirect('/')
+    else:
+        form=EventCommentForm()
+
+    return render(request,'app/event_comment_form.html',{'form':form})
+
+def eventDetailwithcomment(request,pk):
+    event_comment_d=get_object_or_404(EventModel,pk=pk)
+    inherited_comments=event_comment_d.event_comment.all()
+    addcomment=False;
+    if(request.method=='POST'):
+        addcomment=True;
+    return render(request,'app/event_detail.html',{'event_comment_d':event_comment_d,
+                                                   'inherited_comments':inherited_comments,
+                                                   'addcomment':addcomment})

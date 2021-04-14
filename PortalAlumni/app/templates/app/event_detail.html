@@ -1,0 +1,25 @@
+{%extends 'app/base.html'%}
+{%block event_detail%}
+        <div class="event_detail">
+            <img src="{{event_comment_d.photo.url}}" style="border-radius:3px">
+            <h1>{{event_comment_d.title}}</h1>
+            <p>{{event_comment_d.text}}</p>
+            <p>Published Date: {{event_comment_d.published_date}}</p>
+            {%if user.is_authenticated%}
+                <a class="btn btn-primary" href="{%url 'app:eventcommentform' pk=event_comment_d.pk%}">Add Comment</a>
+
+                <button class="btn btn-primary" onClick="window.location.href=window.location.href">Refresh Page</button>
+            {%else%}
+                <a class="btn btn-primary" href="{%url 'app:login'%}?next={{request.path}}">Add Comment</a>
+            {%endif%}
+
+            {%for comments in inherited_comments%}
+                <div class="comments">
+                    <p>Name: {{comments.name}}</p>
+                    <p>Comment: {{comments.comment}}</p>
+                    <P>Published_date: {{comments.published_date_comment}}</P>
+                </div>
+            {%endfor%}
+        </div>
+
+{%endblock%}

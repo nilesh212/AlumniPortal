@@ -1,0 +1,25 @@
+
+
+
+
+{%extends 'app/base.html'%}
+{%block body_block%}
+    <h1>Event of User: <b><i>{{user.first_name}}</i></b></h1>
+    {%for event in event_data%}
+        <div class="event_data">
+            <img src="{{event.photo.url}}" width="610" style="border-radius:3px">
+            <h1>{{event.title}}</h1>
+            <p>{{event.text}}</p>
+            <p>Published Date: {{event.published_date}}</p>
+        </div>
+    {%endfor%}
+
+{%endblock%}
+
+<!--<img src="{{ events.photo.url }}" alt="Girl in a jacket" width="500" height="600">-->
+<!--{%for event in even_data%}-->
+<!--            <h1>{{event.title}}</h1>-->
+<!--                {{event.photo.url}}-->
+<!--            <p>{{event.text}}</p>-->
+<!--            <p>{{event.published_date}}</p>-->
+<!--    {%endfor%}-->

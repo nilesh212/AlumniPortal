@@ -1,5 +1,5 @@
 from django import forms
-from app.models import SignUpModel,PostModel,EventModel
+from app.models import SignUpModel,PostModel,EventModel,EventComment
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -61,3 +61,11 @@ class EventForm(forms.ModelForm):
 
 
 
+class EventCommentForm(forms.ModelForm):
+    class Meta():
+        model=EventComment
+        fields=['comment']
+
+        widgets = {
+            'comment':forms.Textarea(attrs={'placeholder':'Comment','class':'textarea_align'})
+        }

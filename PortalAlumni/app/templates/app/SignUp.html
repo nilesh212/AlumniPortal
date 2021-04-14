@@ -1,12 +1,13 @@
 
 {%extends 'app/base.html'%}
 {%block signup%}
-     {%if registered%}
+     <div id="signup_form">
+         {%if registered%}
         <h1>Thank you for registration</h1>
     {%else%}
-    <h2>Please SignUp</h2>
-    <br><br><br>
-    <form method="post">
+
+    <form method="post" >
+        <h2 style="color:white;">Please Fill the information <br>to register your account!</h2><hr>
         {%csrf_token%}
             {%if user_form.errors%}
                 <div id="division_id">
@@ -22,7 +23,10 @@
         <p> {{user_form.email}}</p>
         <p>{{signup_form.roll_number}}</p>
         <p>{{signup_form.graduation_year}}</p>
+        <div class="center_button">
          <input type="submit" class="btn btn-primary" name="" value="Register">
+        </div>
     </form>
     {%endif%}
+     </div>
 {%endblock%}

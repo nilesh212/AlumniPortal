@@ -1,0 +1,11 @@
+
+{%extends 'app/base.html'%}
+{%block body_block%}
+    <h1>POST FORM of User <B><i>{{user.username}}</i></B></h1><hr>
+    <form method="post">
+         {%csrf_token%}
+          <p>{{post_filled_form.title}}</p>
+        <p>{{post_filled_form.info}}</p>
+         <input type="submit" class="btn btn-primary" name="" value="submit">
+     </form>
+{%endblock%}

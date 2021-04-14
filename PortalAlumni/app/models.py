@@ -35,6 +35,15 @@ class EventModel(models.Model):
     photo=models.ImageField(null=True,upload_to='event_pics/',blank=True)
     text=models.TextField()
     published_date=models.DateTimeField(default=timezone.now)
+    number_of_comments=models.IntegerField(default=0)
 
     def get_absolute_url(self):
         return reverse('event_detail',kwargs={'pk':self.pk})
+
+class EventComment(models.Model):
+    event = models.ForeignKey(EventModel,related_name='event_comment',on_delete=models.CASCADE,default=0)
+    name=models.CharField(max_length=255)
+    comment=models.TextField()
+    published_date_comment=models.DateTimeField(default=timezone.now)
+
+

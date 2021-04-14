@@ -7,10 +7,11 @@
     <h1>Event of User: <b><i>{{user.first_name}}</i></b></h1>
     {%for event in event_data%}
         <div class="event_data">
-            <img src="{{event.photo.url}}" width="610" style="border-radius:3px">
             <h1>{{event.title}}</h1>
-            <p>{{event.text}}</p>
-            <p>Published Date: {{event.published_date}}</p>
+            <img src="{{event.photo.url}}" width="610" style="border-radius:3px">
+            <p>Comments:{{event.number_of_comments}}</p>
+            <a class="btn btn-primary event_view" href="{%url 'app:eventDetailwithcomment' pk=event.pk%}">Detail</a>
+
         </div>
     {%endfor%}
 

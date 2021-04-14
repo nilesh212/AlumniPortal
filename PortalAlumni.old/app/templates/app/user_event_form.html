@@ -1,0 +1,12 @@
+
+{%extends 'app/base.html'%}
+{%block body_block%}
+    <h1>EVENT FORM of User: <b><i>{{user.first_name}}</i></b></h1><hr>
+    <form method="post" enctype="multipart/form-data">
+        {%csrf_token%}
+        <p>{{form.title}}</p>
+        <p>{{form.text}}</p>
+        <p>Poster of Event: {{form.photo}}</p>
+        <input type="submit" class="btn btn-primary"name="" value="submit">
+    </form>
+{%endblock%}
